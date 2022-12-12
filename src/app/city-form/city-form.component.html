@@ -1,0 +1,25 @@
+<h1>Create a city wishlist</h1>
+
+<div class="container">
+    <form (ngSubmit)="onSubmit()" #cityForm="ngForm">
+
+        <div class="form-group">
+            <label for="name">City Name</label>
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name"
+                        #name="ngModel">
+                    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                        Name is required
+                    </div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-success" [disabled]="!cityForm.form.valid">Submit</button>
+
+        <div class="error" *ngIf="error">
+            <h3>Error! The city you entered is not exist, please try again.</h3>
+        </div>
+
+    </form>
+    <app-messages></app-messages>
+</div>

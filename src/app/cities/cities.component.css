@@ -1,0 +1,20 @@
+
+.cities {
+   
+    color: rgb(226, 127, 105);
+    font-size: 30px;
+}
+
+
+.cities button :selected{
+    color:blueviolet;
+    background-color: black;
+}
+
+.cities-list{
+    padding: 20px;
+}
+
+.cities-list :hover{
+    color: rgb(255, 21, 0);
+}

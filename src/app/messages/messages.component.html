@@ -1,0 +1,5 @@
+<h2>Your travel history</h2>
+<button type="button" class="clear"
+    (click)="messageService.clear()">Clear History</button>
+
+<div *ngFor="let message of messageService.messages">{{message}}</div>
