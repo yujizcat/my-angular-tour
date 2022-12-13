@@ -5,7 +5,7 @@ import { Itinerary } from './itinerary';
 
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 
 
 
@@ -18,17 +18,22 @@ export class ItineraryService {
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) { 
+    
+   }
 
-
-  id = 0;
+  test: any = "test";
+  id = 10;
   itineraryUrl = 'api/itinerary';  // URL to web api
   itineraryAPI = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json';
 
   itinerary: string[] = [];
 
 
-
+  getId() {
+    console.log(this.test);
+    return this.id;
+  }
 
   add(itin: string) {
     this.itinerary.push(itin);
@@ -81,58 +86,60 @@ export class ItineraryService {
   }
 
   getLastId() {
+    
     console.log('get last id');
     var result = this.http
       .get<{ [key: string]: Itinerary }>(this.itineraryAPI)
       .pipe(
         map(res => {
-
+          console.log(res);
+          this.test = res;
+          console.log(this.test);
           return res;
+
         })
       );
-        //return result;
-    
-        result.subscribe(val => {
-    
-    
-          let arrayList = this.iterateObject(val);
-          let maxId = 0;
-          for (let i in arrayList){
-             // console.log(arrayList[i].id);
-             if (arrayList[i].id >= maxId){
-              maxId = arrayList[i].id + 1;
-             }
-             
-          }
-          console.log(maxId);
-          this.id = maxId;
-          console.log(this.id);
-          return this.id;
-    
+      
+    result.subscribe(val => {
+
+      
+      let arrayList = this.iterateObject(val);
+      let maxId = 0;
+      for (let i in arrayList) {
+        // console.log(arrayList[i].id);
+        if (arrayList[i].id >= maxId) {
+          maxId = arrayList[i].id + 1;
+        }
+
+      }
+      console.log(maxId);
+      this.id = maxId;
+      console.log(this.id);
+      
+     return this.id;
 
 
+    });
 
 
-
-
-  });
-  
-
-}
-
-
-iterateObject(obj: any) {
-  var myArray = [];
-  // console.log(obj);
-  for (let i in obj) {
-    console.log(obj[i]);
-    myArray.push(obj[i]);
   }
 
-  // console.log(myArray);
-  return myArray;
 
-}
+  iterateObject(obj: any) {
+    var myArray = [];
+    // console.log(obj);
+    for (let i in obj) {
+      console.log(obj[i]);
+      myArray.push(obj[i]);
+    }
+
+    this.id = 88;
+    console.log(this.id);
+
+    // console.log(myArray);
+    return myArray;
+
+  }
 
 
 

@@ -63,6 +63,16 @@ export class CityDetailsComponent {
     this.cityService.getCity(id)
   }
 
+  deleteThisCity(city: CityModel): void {
+
+    const u = this.cityService.fetchCities();
+    console.log(u.subscribe(res => {console.log(res)}));
+
+    const cityURL = '';
+    console.log(city);
+    this.cityService.deleteOneCity(city.name);
+  }
+
   closedetails(): void {
 
   }

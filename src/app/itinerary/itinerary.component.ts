@@ -36,9 +36,11 @@ export class ItineraryComponent {
   }
 
   getLastId() {
-   const aaa = this.ItineraryService.getLastId();
-
-   console.log(aaa);
+   //this.ItineraryService.getLastId();
+   //console.log(this.ItineraryService.getId());
+   var a = this.ItineraryService.getLastId();
+   console.log(a);
+   console.log(this.ItineraryService.getId());
   }
 
 

@@ -33,6 +33,8 @@ export class CityService {
   cityName = "";
   weatherURL = "";
 
+  tempURL = "tempURL";
+
   error = new Subject<string>();
   getError = false;
 
@@ -119,10 +121,30 @@ export class CityService {
     return this.http.delete(this.citiesAPI);
   }
 
-  deleteOneCity(id: number) {
-    const url = `${this.citiesUrl}/0`;
-    return this.http.delete(url, httpOptions); 
+  deleteOneCity(cityName: string) {
+    
+    console.log(cityName);
     console.log('one city deleted');
+    this.http.get(this.citiesAPI, httpOptions).subscribe(res => {
+      console.log(res);
+      let urlKey = '';
+      Object.entries(res).forEach(([key, value], index) => {
+        //console.log(key, value, index);
+        console.log(value.name);
+        if (cityName==value.name){
+          console.log('match');
+          console.log(key);
+          urlKey = key;
+        }
+        
+      });
+      this.tempURL = urlKey;
+      console.log(`delete ${urlKey}`);
+      this.http.delete(`https://city-api-test-default-rtdb.firebaseio.com/cities/${urlKey}.json`, httpOptions); 
+    });
+    console.log(this.tempURL);
+    //return this.http.delete(cityURL, httpOptions); 
+    
   }
 
   async getWeather(city: string): Promise<any> {
