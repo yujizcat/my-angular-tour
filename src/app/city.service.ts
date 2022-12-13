@@ -4,6 +4,8 @@ import { City } from './city';
 import { CITIES } from './mock-cities';
 import { Observable, of } from 'rxjs';
 
+import { HttpHeaders } from '@angular/common/http';
+
 import { CityModel } from './city.model';
 import { CityFormComponent } from './city-form/city-form.component';
 
@@ -12,7 +14,12 @@ import { Subject, throwError } from 'rxjs';
 
 import { MessageService } from './message.service';
 
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    Authorization: 'my-auth-token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -110,6 +117,12 @@ export class CityService {
 
   deleteCities() {
     return this.http.delete(this.citiesAPI);
+  }
+
+  deleteOneCity(id: number) {
+    const url = `${this.citiesUrl}/0`;
+    return this.http.delete(url, httpOptions); 
+    console.log('one city deleted');
   }
 
   async getWeather(city: string): Promise<any> {

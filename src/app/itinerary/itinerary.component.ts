@@ -9,7 +9,7 @@ import { Itinerary } from '../itinerary';
 })
 export class ItineraryComponent {
   constructor(public ItineraryService: ItineraryService) {}
-
+  
   itinerary: Itinerary[] = []
   editTrip: Itinerary | undefined;
   tripDate = "";
@@ -33,6 +33,12 @@ export class ItineraryComponent {
     this.ItineraryService.deleteItinerary2().subscribe(() => {
       this.itinerary = [];
     })
+  }
+
+  getLastId() {
+   const aaa = this.ItineraryService.getLastId();
+
+   console.log(aaa);
   }
 
 

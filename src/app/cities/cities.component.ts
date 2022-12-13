@@ -42,6 +42,14 @@ export class CitiesComponent implements OnInit {
     })
   }
 
+  deleteOneCity(): void {
+    this.cities = this.cities.filter(c => c !== c);
+    this.cityService
+      .deleteOneCity(1)
+      .subscribe();
+
+  }
+
   hideCities(): void{
     this.open = 0;
   }

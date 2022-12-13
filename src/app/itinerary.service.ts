@@ -5,9 +5,11 @@ import { Itinerary } from './itinerary';
 
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 
-import { doc, deleteDoc } from "firebase/firestore";
-import { getDatabase, ref, remove } from "firebase/database"; 
+
+
+import { collection, addDoc, namedQuery } from "firebase/firestore";
 
 @Injectable({
   providedIn: 'root'
@@ -18,22 +20,28 @@ export class ItineraryService {
     private http: HttpClient,
   ) { }
 
+
+  id = 0;
   itineraryUrl = 'api/itinerary';  // URL to web api
-  itineraryAPI = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json'
+  itineraryAPI = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json';
 
-  itinerary: string[]= [];
+  itinerary: string[] = [];
 
-  add(itin:string){
+
+
+
+  add(itin: string) {
     this.itinerary.push(itin);
 
   }
 
-  clear(){
-    this.itinerary=[];
+  clear() {
+    this.itinerary = [];
   }
 
-  async createItinerary(itinerary: Itinerary){
-    const itineraryData: Itinerary = {city: itinerary.city,date: itinerary.date, cost: itinerary.cost};
+  async createItinerary(itinerary: Itinerary) {
+    //itinerary.id = this.getLastId();
+    const itineraryData: Itinerary = { id: itinerary.id, city: itinerary.city, date: itinerary.date, cost: itinerary.cost };
     this.http
       .post<{ name: string }>(
         this.itineraryAPI, itineraryData
@@ -64,13 +72,73 @@ export class ItineraryService {
   deleteItinerary2() {
     //var testURL = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json';
     return this.http.delete(this.itineraryAPI);
-    
+
+
   }
 
-  updateTrip(){
-    
+  updateTrip() {
+
   }
 
+  getLastId() {
+    console.log('get last id');
+    var result = this.http
+      .get<{ [key: string]: Itinerary }>(this.itineraryAPI)
+      .pipe(
+        map(res => {
+
+          return res;
+        })
+      );
+        //return result;
+    
+        result.subscribe(val => {
+    
+    
+          let arrayList = this.iterateObject(val);
+          let maxId = 0;
+          for (let i in arrayList){
+             // console.log(arrayList[i].id);
+             if (arrayList[i].id >= maxId){
+              maxId = arrayList[i].id + 1;
+             }
+             
+          }
+          console.log(maxId);
+          this.id = maxId;
+          console.log(this.id);
+          return this.id;
+    
+
+
+
+
+
+
+  });
   
+
+}
+
+
+iterateObject(obj: any) {
+  var myArray = [];
+  // console.log(obj);
+  for (let i in obj) {
+    console.log(obj[i]);
+    myArray.push(obj[i]);
+  }
+
+  // console.log(myArray);
+  return myArray;
+
+}
+
+
+
+
+
+
+
 
 }
