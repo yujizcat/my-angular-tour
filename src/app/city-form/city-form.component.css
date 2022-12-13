@@ -1,3 +1,14 @@
 .error{
     color: red;
 }
+
+.title{
+    text-align: center;
+    padding: 30px;
+}
+
+
+.container {
+    text-align: center;
+    padding: 30px;
+}

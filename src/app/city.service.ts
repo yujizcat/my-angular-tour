@@ -84,7 +84,7 @@ export class CityService {
     } else {
       //this.cityForm.causedError();
       console.log('cause error not found');
-      throw new Error('Something went wrong');
+      
     }
 
    
@@ -140,7 +140,7 @@ export class CityService {
     this.weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=${this.cityName}&appid=${this.weatherAPIKey}`;
   }
 
-
+  
 
 
 

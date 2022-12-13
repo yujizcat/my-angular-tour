@@ -42,4 +42,8 @@ export class CitiesComponent implements OnInit {
     })
   }
 
+  hideCities(): void{
+    this.open = 0;
+  }
+
 }

@@ -1,0 +1,11 @@
+.city-detail {
+    text-align: center;
+    border: 1px solid;
+    background-color: rgb(240, 240, 233);
+    width: fit-content;
+    margin: auto;
+}
+
+.add-trip{
+    background-color: rgb(235, 247, 222);
+}

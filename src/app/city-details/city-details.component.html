@@ -1,13 +1,14 @@
-<div *ngIf="city">
-    <h2>{{city.name | uppercase}} Trip</h2>
+<div class="city-detail" *ngIf="city">
+    <h1>{{city.name | uppercase}} Trip</h1>
     <h3>Country: {{city.country}}</h3>
     <h3>Population: {{city.population}}</h3>
     <h3>Weather: {{city.weather}}</h3>
     <h3>Temperature: {{city.temperature}}</h3>
 
+    <p></p>
     <div>
         <label for="trip-date">What's your planned date?: </label>
-        <input id="date" [(ngModel)]="this.date" placeholder="date">
+        <input id="date" required [(ngModel)]="this.date" placeholder="date">
     </div>
 
     <div>
@@ -15,8 +16,11 @@
         <input id="cost" [(ngModel)]="this.cost" placeholder="cost">
     </div>
 
-    <button [class.selected]="city === selectedCity"  type="button" (click)="onSelect(city)">
-        <span class="cities">I would love to add {{city.name}} to my itinerary!</span>
-    </button>
-</div>
+    <div class="add-trip">
+        <a [class.selected]="city === selectedCity" type="button" (click)="onSelect(city)">
+            <span class="cities">I would love to add {{city.name}} to my itinerary!</span>
+        </a>
+    </div>
 
+    <p></p>
+</div>

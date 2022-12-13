@@ -1,6 +1,13 @@
-<h1>My Itinerary</h1>
-<div *ngFor="let itin of itinerary">On the date {{itin.date}}, I will plan to go to {{itin.city}}, it may cost me €{{itin.cost}}</div>
+<h1 class="title">My Itinerary</h1>
+
+
+<div class="content" *ngFor="let itin of itinerary">
+  On the date {{itin.date}}, I will plan to go to {{itin.city}}, it may cost me €{{itin.cost}}
+  
+</div>
 <p></p>
-<button class="btn btn-primary" (click)="deleteItinerary()">
+
+
+<button class="btn btn-primary" (click)="deleteItinerary2()">
     Delete My Itinerary
   </button>

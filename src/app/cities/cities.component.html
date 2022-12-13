@@ -1,18 +1,33 @@
-<li *ngFor="let city of cities">
-    <a class="cities-list" [class.selected]="city === selectedCity"  type="button" (click)="onSelect(city)">
-        <span class="cities">{{city.name}}</span>
-    </a>
-   
-</li>
-
-<div *ngIf="this.open===1">
-<app-city-details [city]="selectedCity"></app-city-details>
-</div>
-
-<button class="btn btn-primary" (click)="getCities()">
+<div class="function-buttons">
+  <button class="btn btn-primary" (click)="getCities()">
     Fetch Cities
   </button>
 
+
+
   <button class="btn btn-primary" (click)="deleteCities()">
-    Delete Cities
+    Delete all Cities
   </button>
+
+
+
+  <button class="btn btn-primary" (click)="hideCities()">
+    Hide
+  </button>
+</div>
+
+<div class="city-with-details">
+<div class="city">
+  <li *ngFor="let city of cities">
+    <a class="cities-list" [class.selected]="city === selectedCity" type="button" (click)="onSelect(city)">
+      <span class="cities">{{city.name}}</span>
+    </a>
+
+  </li>
+</div>
+
+<div *ngIf="this.open===1">
+  <app-city-details [city]="selectedCity"></app-city-details>
+</div>
+
+</div>

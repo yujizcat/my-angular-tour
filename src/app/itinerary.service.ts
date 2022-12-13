@@ -4,6 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Itinerary } from './itinerary';
 
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { doc, deleteDoc } from "firebase/firestore";
+import { getDatabase, ref, remove } from "firebase/database"; 
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +60,17 @@ export class ItineraryService {
       )
   }
 
-  deleteItinerary() {
+
+  deleteItinerary2() {
+    //var testURL = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json';
     return this.http.delete(this.itineraryAPI);
+    
   }
+
+  updateTrip(){
+    
+  }
+
+  
 
 }
