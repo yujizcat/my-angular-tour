@@ -15,6 +15,8 @@ import {RouterModule} from '@angular/router';
 import { CityFormComponent } from './city-form/city-form.component';
 import { ItineraryComponent } from './itinerary/itinerary.component';
 
+import { ItineraryUpdateFormComponent } from './itinerary-update-form/itinerary-update-form.component';
+
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import { ItineraryComponent } from './itinerary/itinerary.component';
     DashboardComponent,
     CityFormComponent,
     ItineraryComponent,
+    ItineraryUpdateFormComponent,
    
   
   ],

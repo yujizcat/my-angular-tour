@@ -14,11 +14,15 @@ export class CitiesComponent implements OnInit {
   constructor(private cityService: CityService, private messageService: MessageService) { }
 
   cities: CityModel[] = []
-  //times = 1
   open = 0
 
   ngOnInit(): void {
     this.getCities();
+    this.cityService.sub$.subscribe((name:any)=>{
+      console.log(`call componets from service ${name}`);
+      this.open = 0;
+      this.getCities();
+    })
   }
 
   selectedCity?: CityModel;

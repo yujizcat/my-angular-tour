@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { City } from './city';
 import { CITIES } from './mock-cities';
 import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators'
 
 import { HttpHeaders } from '@angular/common/http';
 
@@ -13,6 +14,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 
 import { MessageService } from './message.service';
+import { CitiesComponent } from './cities/cities.component';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,6 +26,9 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class CityService {
 
   citiesUrl = 'api/cities';  // URL to web api
@@ -34,16 +39,20 @@ export class CityService {
   weatherURL = "";
 
   tempURL = "tempURL";
+  tempValue = "tempValue";
 
   error = new Subject<string>();
   getError = false;
 
-  cityForm = CityFormComponent;
+  citiesSubject = new Subject();
+  sub$ = this.citiesSubject.asObservable();
+
+
 
 
   constructor(
     //private cityForm: CityFormComponent,
-    private messageService: MessageService,
+    // private cities: CitiesComponent,
     private http: HttpClient,
   ) { }
 
@@ -119,33 +128,42 @@ export class CityService {
 
   deleteCities() {
     return this.http.delete(this.citiesAPI);
+    //console.log('test delete');
+    //return this.http.delete(`https://city-api-test-default-rtdb.firebaseio.com/cities/${this.tempURL}.json`, httpOptions);
+    
   }
 
-  deleteOneCity(cityName: string) {
-    
+   deleteOneCity(cityName: string) {
     console.log(cityName);
-    console.log('one city deleted');
-    this.http.get(this.citiesAPI, httpOptions).subscribe(res => {
+     this.http.get(this.citiesAPI, httpOptions)
+     .subscribe(res => {
+      if (res) {
       console.log(res);
       let urlKey = '';
       Object.entries(res).forEach(([key, value], index) => {
-        //console.log(key, value, index);
-        console.log(value.name);
+  
         if (cityName==value.name){
-          console.log('match');
-          console.log(key);
           urlKey = key;
         }
         
       });
+      
       this.tempURL = urlKey;
       console.log(`delete ${urlKey}`);
-      this.http.delete(`https://city-api-test-default-rtdb.firebaseio.com/cities/${urlKey}.json`, httpOptions); 
+      }
+      return this.http.delete(`https://city-api-test-default-rtdb.firebaseio.com/cities/${this.tempURL}.json`, httpOptions)
+      .subscribe(res => {
+        console.log('refresh');
+        this.citiesSubject.next(cityName);
+      })
     });
+    
+    alert('Deleted');
+    console.log('success deleted');
     console.log(this.tempURL);
-    //return this.http.delete(cityURL, httpOptions); 
     
   }
+
 
   async getWeather(city: string): Promise<any> {
 

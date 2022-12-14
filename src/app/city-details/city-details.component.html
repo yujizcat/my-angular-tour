@@ -1,4 +1,8 @@
 <div class="city-detail" *ngIf="city">
+    <button class="btn btn-danger" (click)="deleteThisCity(city)">
+        Delete this Cities
+      </button>
+      <p></p>
     <h1>{{city.name | uppercase}} Trip</h1>
     <h3>Country: {{city.country}}</h3>
     <h3>Population: {{city.population}}</h3>
@@ -16,15 +20,15 @@
         <input id="cost" [(ngModel)]="this.cost" placeholder="cost">
     </div>
 
-    <div class="add-trip">
-        <a [class.selected]="city === selectedCity" type="button" (click)="onSelect(city)">
-            <span class="cities">I would love to add {{city.name}} to my itinerary!</span>
-        </a>
-    </div>
-
     <p></p>
 
-    <button class="btn btn-primary" (click)="deleteThisCity(city)">
-        Delete this Cities
-      </button>
+    <div class="add-trip">
+        <button class="btn btn-primary" [class.selected]="city === selectedCity" type="button" (click)="onSelect(city)">
+            <span class="cities">I would love to add {{city.name}} to my itinerary!</span>
+        </button>
+    </div>
+
+    
+
+ 
 </div>

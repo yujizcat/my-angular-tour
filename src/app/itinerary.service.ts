@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 import { Itinerary } from './itinerary';
 
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { of, from } from 'rxjs';
 
-
-
-import { collection, addDoc, namedQuery } from "firebase/firestore";
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: 'my-auth-token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +23,9 @@ export class ItineraryService {
 
   constructor(
     private http: HttpClient,
-  ) { 
-    
-   }
+  ) {
+
+  }
 
   test: any = "test";
   id = 10;
@@ -28,6 +33,8 @@ export class ItineraryService {
   itineraryAPI = 'https://city-api-test-default-rtdb.firebaseio.com/itinerary.json';
 
   itinerary: string[] = [];
+
+  tempURL = "";
 
 
   getId() {
@@ -81,12 +88,42 @@ export class ItineraryService {
 
   }
 
-  updateTrip() {
+  updateTrip(itinerary: Itinerary) {
+    console.log(itinerary);
+    this.http.get(this.itineraryAPI, httpOptions)
+      .subscribe(res => {
+        let newDate = '';
+        let newCost = 0;
+        if (res) {
+          console.log(res);
+          let urlKey = '';
 
+          Object.entries(res).forEach(([key, value], index) => {
+            console.log(key);
+            console.log(value);
+            console.log(itinerary.city);
+
+            if (itinerary.city == value.city) {
+              urlKey = key;
+     
+              newDate = itinerary.date;
+              newCost = itinerary.cost;
+            }
+            this.tempURL = urlKey;
+            console.log(`update ${urlKey}`);
+
+          });
+        }
+        let body = { "date": newDate, "cost": newCost };
+        console.log(body);
+        console.log(this.tempURL);
+        return this.http.patch(`https://city-api-test-default-rtdb.firebaseio.com/itinerary/${this.tempURL}.json`, body, httpOptions)
+          .subscribe();
+      })
   }
 
   getLastId() {
-    
+
     console.log('get last id');
     var result = this.http
       .get<{ [key: string]: Itinerary }>(this.itineraryAPI)
@@ -99,10 +136,10 @@ export class ItineraryService {
 
         })
       );
-      
+
     result.subscribe(val => {
 
-      
+
       let arrayList = this.iterateObject(val);
       let maxId = 0;
       for (let i in arrayList) {
@@ -115,8 +152,8 @@ export class ItineraryService {
       console.log(maxId);
       this.id = maxId;
       console.log(this.id);
-      
-     return this.id;
+
+      return this.id;
 
 
     });

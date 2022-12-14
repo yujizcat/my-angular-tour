@@ -1,15 +1,44 @@
 <h1 class="title">My Itinerary</h1>
 
+<div class="" *ngIf="openUpdateForm===false">
+  <div class="content" *ngFor="let itin of itinerary">
+    On the date {{itin.date}}, I will plan to go to {{itin.city}}, it may cost me €{{itin.cost}}
+    <button class="btn btn-primary" [class.selected]="itin === selectedItin" (click)="onSelect(itin)">
+      Update My Itinerary
+    </button>
 
-<div class="content" *ngFor="let itin of itinerary">
-  On the date {{itin.date}}, I will plan to go to {{itin.city}}, it may cost me €{{itin.cost}}
-  
+  </div>
 </div>
 <p></p>
 
+<div class="update-form" *ngIf="openUpdateForm===true">
+
+  <a (click)="openUpdateForm=false">
+    Back
+  </a>
+  <h2>Itinerary Update Form</h2>
+
+  <form (ngSubmit)="onSubmit()" #itinForm="ngForm">
+
+
+    <div class="form-group">
+      Trip City: {{selectedItin?.city}}
+      <p></p>
+      <label for="itin">New Trip Date</label>
+      <input type="text" class="form-control" id="date" required [(ngModel)]="model.date" name="date" #name="ngModel">
+      <label for="itin">New Trip Cost</label>
+      <input type="text" class="form-control" id="cost" required [(ngModel)]="model.cost" name="cost" #name="ngModel">
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!itinForm.form.valid">Submit</button>
+  </form>
+  <p></p>
+
+</div>
+
+
+
 
 <button class="btn btn-primary" (click)="deleteItinerary2()">
-    Delete My Itinerary
-  </button>
-
-
+  Delete My Itinerary
+</button>

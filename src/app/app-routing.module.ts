@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CityDetailsComponent } from './city-details/city-details.component';
 import { CityFormComponent } from './city-form/city-form.component';
 import { ItineraryComponent } from './itinerary/itinerary.component';
+import { ItineraryUpdateFormComponent } from './itinerary-update-form/itinerary-update-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'cities', component: CitiesComponent },
   { path: 'city-form', component: CityFormComponent },
   { path: 'detail/:id', component: CityDetailsComponent },
-  { path: 'itinerary', component: ItineraryComponent}
+  { path: 'itinerary', component: ItineraryComponent},
+  { path: 'itinerary-update-form', component: ItineraryUpdateFormComponent},
 ];
 
 @NgModule({
